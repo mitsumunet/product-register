@@ -1,0 +1,15 @@
+FROM ruby:2.5
+#RUN cat /etc/apt/sources.list
+#RUN echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list &&\
+#    echo "deb http://security.debian.org jessie/updates main" >> /etc/apt/sources.list 
+RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update 
+#RUN apt-get update
+RUN apt-get install -y \
+    build-essential \
+    libpq-dev \
+    nodejs \
+    postgresql-client \
+    yarn
+WORKDIR /product-register
+COPY Gemfile Gemfile.lock /product-register/
+RUN bundle install
